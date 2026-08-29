@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0f172a">
+  <title>GRE Verbal Practice - Official Practice Questions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="theme-dark">
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="header-top-row">
+      <div class="brand">
+        <span class="brand-icon">⚡</span>
+        <div class="brand-info">
+          <h1>GRE Verbal</h1>
+          <span class="brand-sub">Official Practice</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Study / Exam Mode -->
+        <div class="mode-pill-group">
+          <button id="mode-study-btn" class="mode-pill active">Study</button>
+          <button id="mode-exam-btn" class="mode-pill">Exam</button>
+        </div>
+
+        <button id="btn-grid-toggle" class="header-icon-btn" title="Question Navigator" aria-label="Question Grid">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        </button>
+        <button id="btn-stats-toggle" class="header-icon-btn" title="Stats & Progress" aria-label="Stats">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"></path></svg>
+        </button>
+        <button id="btn-settings-toggle" class="header-icon-btn" title="Theme & Settings" aria-label="Settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Section Selection Dropdown -->
+    <div class="header-dropdown-row">
+      <div class="select-box">
+        <select id="section-select" aria-label="Select Practice Set">
+          <option value="all">📚 All Sets (158 Questions)</option>
+          <optgroup label="Chapter 2: Test Content">
+            <option value="ch2-s1">Sample Questions (8 Qs)</option>
+          </optgroup>
+          <optgroup label="Chapter 3: Reading Comprehension">
+            <option value="ch3-s1">RC Practice Set 1: Easy (9 Qs)</option>
+            <option value="ch3-s2">RC Practice Set 2: Medium (11 Qs)</option>
+            <option value="ch3-s3">RC Practice Set 3: Hard (10 Qs)</option>
+          </optgroup>
+          <optgroup label="Chapter 4: Text Completion">
+            <option value="ch4-s1">TC Practice Set 1: Easy (9 Qs)</option>
+            <option value="ch4-s2">TC Practice Set 2: Medium (8 Qs)</option>
+            <option value="ch4-s3">TC Practice Set 3: Hard (8 Qs)</option>
+          </optgroup>
+          <optgroup label="Chapter 5: Sentence Equivalence">
+            <option value="ch5-s1">SE Practice Set 1: Easy (5 Qs)</option>
+            <option value="ch5-s2">SE Practice Set 2: Medium (8 Qs)</option>
+            <option value="ch5-s3">SE Practice Set 3: Hard (7 Qs)</option>
+          </optgroup>
+          <optgroup label="Chapter 6: Mixed Practice Sets">
+            <option value="ch6-s1">Mixed Set 1 (25 Qs)</option>
+            <option value="ch6-s2">Mixed Set 2 (25 Qs)</option>
+            <option value="ch6-s3">Mixed Set 3 (25 Qs)</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- Filter & Timer Strip -->
+  <div class="sub-strip">
+    <div class="filter-scroll-wrapper">
+      <button class="filter-pill active" data-filter-type="all">All Types</button>
+      <button class="filter-pill" data-filter-type="rc">📖 Reading Comp</button>
+      <button class="filter-pill" data-filter-type="tc">✍️ Text Comp</button>
+      <button class="filter-pill" data-filter-type="se">⚖️ Sent. Equiv</button>
+      <span class="pill-divider"></span>
+      <button class="filter-pill" data-filter-diff="all">All Difficulties</button>
+      <button class="filter-pill" data-filter-diff="Easy">🟢 Easy</button>
+      <button class="filter-pill" data-filter-diff="Medium">🟡 Medium</button>
+      <button class="filter-pill" data-filter-diff="Hard">🔴 Hard</button>
+      <span class="pill-divider"></span>
+      <button class="filter-pill" data-filter-status="bookmarks">⭐ Saved (<span id="bookmark-count">0</span>)</button>
+    </div>
+
+    <!-- Exam Timer & Bar -->
+    <div id="exam-timer-bar" class="exam-timer-bar hidden">
+      <div class="timer-badge">
+        <span class="timer-icon">⏳</span>
+        <span id="exam-timer-text">35:00</span>
+      </div>
+      <button id="exam-review-btn" class="btn-xs btn-secondary">Review</button>
+      <button id="exam-submit-btn" class="btn-xs btn-danger">Finish</button>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar-wrapper">
+    <div id="progress-bar" class="progress-bar-fill" style="width: 0%;"></div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <main class="main-container" id="main-app">
+    
+    <!-- Mobile Passage Toggle Accordion (Visible on Mobile only for RC) -->
+    <div id="mobile-passage-accordion" class="mobile-passage-card hidden">
+      <button id="mobile-passage-header-btn" class="mobile-passage-header" aria-expanded="false">
+        <div class="mp-left">
+          <span class="mp-icon">📜</span>
+          <div class="mp-title-group">
+            <span class="mp-tag">Reading Passage</span>
+            <span id="mobile-passage-title" class="mp-title">Passage Title</span>
+          </div>
+        </div>
+        <span class="mp-chevron" id="mobile-passage-chevron">Show Passage ▼</span>
+      </button>
+      <div id="mobile-passage-body" class="mobile-passage-content">
+        <div id="mobile-passage-text" class="passage-text"></div>
+        
+        <!-- Collapsible Overview (Hidden by default, shown only on click) -->
+        <div id="mobile-passage-desc-container" class="passage-desc-collapsible hidden">
+          <button id="btn-toggle-mobile-desc" class="desc-toggle-btn" type="button">
+            <span class="desc-toggle-left">💡 <strong>Passage Overview & Structure</strong></span>
+            <span id="mobile-desc-chevron" class="desc-chevron">Click to show ▼</span>
+          </button>
+          <div id="mobile-desc-content" class="desc-content-panel hidden">
+            <p id="mobile-passage-desc-text"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-layout" id="quiz-layout">
+      <!-- Desktop/Tablet Passage Panel -->
+      <aside class="passage-panel hidden" id="passage-panel">
+        <div class="passage-header">
+          <div class="passage-badge-title">
+            <span class="passage-tag">Reading Comprehension Passage</span>
+            <h2 id="passage-title" class="passage-title">Passage Title</h2>
+          </div>
+        </div>
+        
+        <div class="passage-body-wrapper">
+          <div id="passage-text" class="passage-text"></div>
+        </div>
+
+        <!-- Desktop Collapsible Overview (Hidden by default, shown only on click) -->
+        <div id="desktop-passage-desc-container" class="passage-desc-collapsible hidden">
+          <button id="btn-toggle-desktop-desc" class="desc-toggle-btn" type="button">
+            <span class="desc-toggle-left">💡 <strong>Passage Overview & Structure</strong></span>
+            <span id="desktop-desc-chevron" class="desc-chevron">Click to show ▼</span>
+          </button>
+          <div id="desktop-desc-content" class="desc-content-panel hidden">
+            <p id="passage-desc-text"></p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Question Panel -->
+      <section class="question-panel" id="question-panel">
+        <div class="question-meta-bar">
+          <div class="meta-left">
+            <span class="q-index" id="q-counter">Q 1 of 158</span>
+            <span class="badge" id="q-badge-chapter">Ch 3</span>
+            <span class="badge badge-type" id="q-badge-type">Reading Comp</span>
+            <span class="badge badge-diff" id="q-badge-diff">Medium</span>
+          </div>
+          <div class="meta-right">
+            <!-- PDF Source Locator Button -->
+            <button id="btn-open-pdf-modal" class="btn-action-pill btn-pdf-pill" title="Locate Question and Solution in Official PDF" aria-label="PDF Source">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              <span id="btn-pdf-page-label" class="pill-label">PDF p. 24</span>
+            </button>
+            <!-- Copy Question Button -->
+            <button id="btn-copy-question" class="btn-action-pill" title="Copy Question and Choices to Clipboard" aria-label="Copy Question">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span class="pill-label">Copy Q</span>
+            </button>
+            <!-- Copy Answer Button -->
+            <button id="btn-copy-answer" class="btn-action-pill" title="Copy Official Answer and Explanation to Clipboard" aria-label="Copy Answer">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              <span class="pill-label">Copy Ans</span>
+            </button>
+            <!-- Bookmark Button -->
+            <button id="bookmark-btn" class="btn-icon-bookmark" title="Bookmark Question" aria-label="Bookmark">
+              <span class="bookmark-icon">☆</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Question Card -->
+        <div class="question-card">
+          <!-- Instruction -->
+          <div id="q-instruction" class="q-instruction">
+            Select only one answer choice unless otherwise directed.
+          </div>
+
+          <!-- Prompt -->
+          <div id="q-prompt" class="q-prompt"></div>
+
+          <!-- Options / Tables -->
+          <form id="options-form" class="options-container"></form>
+
+          <!-- Action Buttons -->
+          <div class="question-actions">
+            <button id="btn-check-answer" class="btn btn-primary">
+              <span>Check Answer</span>
+            </button>
+            <button id="btn-clear-selection" class="btn btn-secondary">
+              <span>Clear</span>
+            </button>
+          </div>
+
+          <!-- Collapsible Dropdown Answer & Explanation Accordion -->
+          <div id="explanation-container" class="explanation-dropdown-card hidden">
+            <button id="explanation-toggle-btn" class="explanation-accordion-header" aria-expanded="false">
+              <div class="accordion-title-area">
+                <span class="status-indicator-icon" id="exp-status-icon">💡</span>
+                <div class="accordion-text-group">
+                  <strong class="accordion-title" id="exp-header-text">Official Answer & Explanation</strong>
+                  <span class="accordion-subtitle" id="exp-header-sub">Click to show official ETS solution</span>
+                </div>
+              </div>
+              <span class="accordion-chevron">▼</span>
+            </button>
+
+            <div id="explanation-content" class="explanation-accordion-body">
+              <!-- Correct Key Banner & PDF Source Link -->
+              <div class="correct-answer-banner">
+                <div class="key-left">
+                  <span class="banner-label">Correct Answer:</span>
+                  <span class="banner-value" id="exp-correct-key">Choice E</span>
+                </div>
+                <button id="btn-open-pdf-exp" class="btn-pdf-exp-link" title="Open Explanation in PDF">
+                  <span>📄 PDF Solution (p. <span id="exp-pdf-page-num">24</span>) ↗</span>
+                </button>
+              </div>
+
+              <!-- Passage Overview inside Explanation (also collapsible) -->
+              <div id="exp-passage-summary" class="exp-passage-summary hidden">
+                <button id="btn-toggle-exp-desc" class="desc-toggle-btn" type="button">
+                  <span class="desc-toggle-left">📖 <strong>Passage Main Idea & Context</strong></span>
+                  <span id="exp-desc-chevron" class="desc-chevron">Click to view ▼</span>
+                </button>
+                <div id="exp-desc-content" class="desc-content-panel hidden">
+                  <p id="exp-passage-summary-text"></p>
+                </div>
+              </div>
+
+              <!-- Full Step-by-Step Explanation -->
+              <div class="exp-text-block">
+                <div class="exp-section-title">📝 Step-by-Step ETS Analysis:</div>
+                <div id="exp-details-text" class="exp-prose"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Navigation Controls (Desktop/Tablet) -->
+        <footer class="quiz-footer">
+          <button id="btn-prev" class="btn btn-nav">
+            <span>← Prev</span>
+          </button>
+          
+          <div class="nav-center-info">
+            <span id="nav-q-indicator">1 / 158</span>
+          </div>
+
+          <button id="btn-next" class="btn btn-nav">
+            <span>Next →</span>
+          </button>
+        </footer>
+      </section>
+    </div>
+
+    <!-- Modals -->
+    <!-- In-App Embedded PDF Source Viewer Modal -->
+    <div id="pdf-modal" class="modal-overlay hidden">
+      <div class="modal-card modal-pdf-card">
+        <div class="modal-header pdf-modal-header">
+          <div class="pdf-modal-title-group">
+            <span class="pdf-icon">📄</span>
+            <h2 id="pdf-modal-title">Official PDF Source</h2>
+          </div>
+          <div class="pdf-modal-controls">
+            <div class="pdf-tab-group">
+              <button id="pdf-tab-question" class="pdf-tab-btn active">📑 Question (p. <span id="pdf-tab-q-num">24</span>)</button>
+              <button id="pdf-tab-answer" class="pdf-tab-btn">💡 Solution (p. <span id="pdf-tab-ans-num">24</span>)</button>
+            </div>
+            <a id="pdf-open-new-tab" class="btn-icon-action" href="Official%20GRE%20Verbal.pdf" target="_blank" title="Open PDF in new browser tab">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              <span class="btn-text-sm">Pop Out</span>
+            </a>
+            <button class="btn-close-modal" id="btn-close-pdf">&times;</button>
+          </div>
+        </div>
+        <div class="modal-body pdf-modal-body">
+          <iframe id="pdf-viewer-frame" class="pdf-frame" src="about:blank" title="Official GRE Verbal PDF Viewer"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Review Modal -->
+    <div id="exam-review-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>Exam Review & Status</h2>
+          <button class="btn-close-modal" id="btn-close-review">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-intro">Review your answered, unanswered, and marked questions before submitting.</p>
+          <div class="review-grid-stats">
+            <span class="stat-badge stat-answered"><strong id="rev-answered-count">0</strong> Answered</span>
+            <span class="stat-badge stat-unanswered"><strong id="rev-unanswered-count">0</strong> Unanswered</span>
+            <span class="stat-badge stat-marked"><strong id="rev-marked-count">0</strong> Marked</span>
+          </div>
+          <div id="exam-review-table" class="exam-review-table-container"></div>
+        </div>
+        <div class="modal-footer">
+          <button id="btn-continue-exam" class="btn btn-secondary">Return to Test</button>
+          <button id="btn-finish-exam-modal" class="btn btn-danger">Finish & Score Test</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Score Report Modal -->
+    <div id="exam-score-modal" class="modal-overlay hidden">
+      <div class="modal-card score-report-card">
+        <div class="modal-header">
+          <h2>Diagnostic Score Report</h2>
+          <button class="btn-close-modal" id="btn-close-score">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="score-hero">
+            <div class="score-circle">
+              <span class="score-number" id="score-percentage">0%</span>
+              <span class="score-label">Raw Accuracy</span>
+            </div>
+            <div class="score-meta">
+              <div class="score-gre-est">
+                <span>Estimated Scaled Score:</span>
+                <h3 id="score-gre-estimate">150 / 170</h3>
+              </div>
+              <p class="score-subtext" id="score-summary-text">You answered 0 of 0 questions correctly.</p>
+            </div>
+          </div>
+
+          <div class="score-breakdown-section">
+            <h4>Performance Breakdown by Question Type</h4>
+            <div id="score-type-bars" class="score-type-bars"></div>
+          </div>
+
+          <div class="score-breakdown-section">
+            <h4>Performance by Difficulty</h4>
+            <div id="score-diff-bars" class="score-type-bars"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btn-review-exam-mistakes" class="btn btn-primary">Review All Explanations</button>
+          <button id="btn-restart-exam" class="btn btn-secondary">Restart Exam</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question Navigator Grid Drawer -->
+    <div id="grid-modal" class="modal-overlay hidden">
+      <div class="modal-card modal-grid-card">
+        <div class="modal-header">
+          <h2>Question Navigator</h2>
+          <button class="btn-close-modal" id="btn-close-grid">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="grid-legend">
+            <span class="legend-item"><span class="dot current"></span> Current</span>
+            <span class="legend-item"><span class="dot answered"></span> Answered</span>
+            <span class="legend-item"><span class="dot incorrect"></span> Incorrect</span>
+            <span class="legend-item"><span class="dot bookmarked"></span> Saved</span>
+          </div>
+          <div id="question-grid-container" class="question-grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats & Analytics Modal -->
+    <div id="stats-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>Your Study Statistics</h2>
+          <button class="btn-close-modal" id="btn-close-stats">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="stats-overview-grid">
+            <div class="stat-card">
+              <span class="stat-val" id="stat-total-completed">0</span>
+              <span class="stat-lbl">Questions Attempted</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-val" id="stat-accuracy-rate">0%</span>
+              <span class="stat-lbl">Overall Accuracy</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-val" id="stat-total-bookmarks">0</span>
+              <span class="stat-lbl">Bookmarked</span>
+            </div>
+          </div>
+
+          <div class="stats-actions">
+            <button id="btn-filter-incorrect" class="btn btn-secondary btn-block">Practice My Incorrect Questions</button>
+            <button id="btn-filter-bookmarks" class="btn btn-secondary btn-block">Practice Bookmarked Questions</button>
+            <button id="btn-reset-progress" class="btn btn-ghost-danger btn-block">Reset All Practice Progress</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings & Theme Modal -->
+    <div id="settings-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>Appearance & Preferences</h2>
+          <button class="btn-close-modal" id="btn-close-settings">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="setting-group">
+            <label class="setting-label">Color Theme</label>
+            <div class="theme-switcher-group">
+              <button class="theme-choice-btn active" data-set-theme="dark">🌙 Dark</button>
+              <button class="theme-choice-btn" data-set-theme="light">☀️ Light</button>
+              <button class="theme-choice-btn" data-set-theme="sepia">📖 Sepia / Paper</button>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <label class="setting-label">Passage Font Size</label>
+            <div class="font-size-group">
+              <button id="font-size-dec" class="btn-font-size">A-</button>
+              <span id="font-size-label">100%</span>
+              <button id="font-size-inc" class="btn-font-size">A+</button>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <label class="setting-label">Passage Font Style</label>
+            <div class="theme-switcher-group">
+              <button class="font-family-btn active" data-set-font="serif">Serif (Merriweather)</button>
+              <button class="font-family-btn" data-set-font="sans">Sans-Serif (Inter)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Mobile Bottom Quick Navigation Bar -->
+  <nav class="mobile-bottom-nav">
+    <button id="mobile-btn-prev" class="mobile-nav-item" aria-label="Previous Question">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+      <span>Prev</span>
+    </button>
+    <button id="mobile-btn-grid" class="mobile-nav-item" aria-label="Grid Navigator">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <span id="mobile-grid-indicator">Q 1/158</span>
+    </button>
+    <button id="mobile-btn-bookmark" class="mobile-nav-item" aria-label="Bookmark">
+      <span id="mobile-bm-star" class="mobile-bm-icon">☆</span>
+      <span>Save</span>
+    </button>
+    <button id="mobile-btn-next" class="mobile-nav-item" aria-label="Next Question">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      <span>Next</span>
+    </button>
+  </nav>
+
+  <!-- 1. Data Modules -->
+  <script src="data/ch2_samples.js"></script>
+  <script src="data/ch3_rc.js"></script>
+  <script src="data/ch4_tc.js"></script>
+  <script src="data/ch5_se.js"></script>
+  <script src="data/ch6_mixed.js"></script>
+  <script src="data/index.js"></script>
+
+  <!-- 2. Logic Modules -->
+  <script src="js/state.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/exam.js"></script>
+  <script src="js/modals.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

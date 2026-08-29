@@ -1,0 +1,329 @@
+/* ==========================================================================
+   GRE Verbal Master - Layout & Structure (Responsive Grid & Header)
+   ========================================================================== */
+
+/* --- App Header --- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.5rem 0.85rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.header-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.brand-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.brand-info h1 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.brand-sub {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  display: block;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mode-pill-group {
+  display: flex;
+  background-color: var(--bg-surface-elevated);
+  padding: 2px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.mode-pill {
+  padding: 0.25rem 0.55rem;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.mode-pill.active {
+  background-color: var(--accent-primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-icon-btn {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.header-icon-btn:hover {
+  background-color: var(--bg-surface-hover);
+  color: var(--accent-primary);
+}
+
+.header-dropdown-row {
+  width: 100%;
+}
+
+.select-box select {
+  width: 100%;
+  padding: 0.45rem 0.65rem;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.select-box select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+/* --- Filter & Timer Strip --- */
+.sub-strip {
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.35rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  overflow-x: auto;
+}
+
+.sub-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-scroll-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.filter-scroll-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-pill {
+  padding: 0.25rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-pill:hover {
+  background-color: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+.filter-pill.active {
+  background-color: var(--accent-primary);
+  color: #ffffff;
+  border-color: var(--accent-primary);
+}
+
+.pill-divider {
+  width: 1px;
+  height: 14px;
+  background-color: var(--border-color);
+  margin: 0 0.15rem;
+}
+
+.exam-timer-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.exam-timer-bar.hidden {
+  display: none;
+}
+
+.timer-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--color-danger);
+}
+
+.btn-xs {
+  padding: 0.2rem 0.45rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+}
+
+/* Progress bar */
+.progress-bar-wrapper {
+  width: 100%;
+  height: 3px;
+  background-color: var(--border-subtle);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-primary), var(--color-success));
+  transition: width 0.3s ease;
+}
+
+/* --- Main Layout Container --- */
+.main-container {
+  flex: 1;
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0.75rem;
+}
+
+/* --- Layout Grid (Desktop) --- */
+.quiz-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .quiz-layout.has-passage {
+    grid-template-columns: 1.1fr 1fr;
+    gap: 1.25rem;
+  }
+}
+
+/* --- Footer Navigation (Desktop) --- */
+.quiz-footer {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 960px) {
+  .quiz-footer {
+    display: flex;
+  }
+}
+
+.nav-center-info {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* --- Mobile Bottom Nav Bar --- */
+.mobile-bottom-nav {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  padding: 0.35rem 0.5rem calc(0.35rem + env(safe-area-inset-bottom, 0px));
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 960px) {
+  .mobile-bottom-nav {
+    display: none;
+  }
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.68rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-sm);
+  min-width: 50px;
+}
+
+.mobile-nav-item:active {
+  background-color: var(--bg-surface-hover);
+  color: var(--accent-primary);
+}
+
+.mobile-bm-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.mobile-nav-item.active .mobile-bm-icon {
+  color: var(--color-warning);
+}
