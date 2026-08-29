@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <!-- PDF.js Engine for Universal Mobile (Android/iOS) and Desktop PDF Rendering -->
+  <script src="lib/pdf.min.js"></script>
 </head>
 <body class="theme-dark">
   <!-- Top Navigation Header -->
@@ -283,28 +285,44 @@
     </div>
 
     <!-- Modals -->
-    <!-- In-App Embedded PDF Source Viewer Modal -->
+    <!-- Native Canvas PDF Source Viewer Modal (Universal Mobile & Desktop) -->
     <div id="pdf-modal" class="modal-overlay hidden">
       <div class="modal-card modal-pdf-card">
         <div class="modal-header pdf-modal-header">
           <div class="pdf-modal-title-group">
             <span class="pdf-icon">📄</span>
-            <h2 id="pdf-modal-title">Official PDF Source</h2>
+            <div class="pdf-title-sub-group">
+              <h2 id="pdf-modal-title">PDF Source</h2>
+              <span id="pdf-page-indicator" class="pdf-page-indicator">Page 1 of 190</span>
+            </div>
           </div>
+
           <div class="pdf-modal-controls">
+            <!-- Fast Switch Tabs -->
             <div class="pdf-tab-group">
               <button id="pdf-tab-question" class="pdf-tab-btn active">📑 Question (p. <span id="pdf-tab-q-num">24</span>)</button>
               <button id="pdf-tab-answer" class="pdf-tab-btn">💡 Solution (p. <span id="pdf-tab-ans-num">24</span>)</button>
             </div>
-            <a id="pdf-open-new-tab" class="btn-icon-action" href="Official%20GRE%20Verbal.pdf" target="_blank" title="Open PDF in new browser tab">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-              <span class="btn-text-sm">Pop Out</span>
-            </a>
+
+            <!-- Zoom & Page Step Controls -->
+            <div class="pdf-zoom-group">
+              <button id="btn-pdf-prev-page" class="btn-pdf-tool" title="Previous Page">‹</button>
+              <button id="btn-pdf-next-page" class="btn-pdf-tool" title="Next Page">›</button>
+              <button id="btn-pdf-zoom-out" class="btn-pdf-tool" title="Zoom Out">−</button>
+              <span id="pdf-zoom-label" class="pdf-zoom-label">100%</span>
+              <button id="btn-pdf-zoom-in" class="btn-pdf-tool" title="Zoom In">+</button>
+            </div>
+
             <button class="btn-close-modal" id="btn-close-pdf">&times;</button>
           </div>
         </div>
-        <div class="modal-body pdf-modal-body">
-          <iframe id="pdf-viewer-frame" class="pdf-frame" src="about:blank" title="Official GRE Verbal PDF Viewer"></iframe>
+
+        <div class="modal-body pdf-canvas-modal-body" id="pdf-canvas-container">
+          <div id="pdf-loading-spinner" class="pdf-spinner">
+            <div class="spinner-ring"></div>
+            <span>Rendering PDF Page...</span>
+          </div>
+          <canvas id="pdf-canvas" class="pdf-render-canvas"></canvas>
         </div>
       </div>
     </div>

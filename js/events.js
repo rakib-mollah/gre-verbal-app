@@ -95,7 +95,7 @@
     const { state, saveState, applyFilters } = global.GREState;
     const { renderCurrentQuestion, toggleExplanationAccordion, updateBookmarkBadge } = global.GRERenderer;
     const { startExamTimer, stopExamTimer, renderExamReview, finishExam } = global.GREExam;
-    const { openModal, closeModal, openPdfModal, switchPdfTab, renderQuestionGrid, updateStatsModal, applySettings } = global.GREModals;
+    const { openModal, closeModal, openPdfModal, switchPdfTab, stepPdfPage, zoomPdf, renderQuestionGrid, updateStatsModal, applySettings } = global.GREModals;
 
     // DOM Elements
     const sectionSelect = document.getElementById('section-select');
@@ -137,10 +137,14 @@
     const mobileBtnPrev = document.getElementById('mobile-btn-prev');
     const mobileBtnNext = document.getElementById('mobile-btn-next');
 
-    // Modals
+    // Modals & PDF Tools
     const pdfModal = document.getElementById('pdf-modal');
     const pdfTabQuestion = document.getElementById('pdf-tab-question');
     const pdfTabAnswer = document.getElementById('pdf-tab-answer');
+    const btnPdfPrevPage = document.getElementById('btn-pdf-prev-page');
+    const btnPdfNextPage = document.getElementById('btn-pdf-next-page');
+    const btnPdfZoomIn = document.getElementById('btn-pdf-zoom-in');
+    const btnPdfZoomOut = document.getElementById('btn-pdf-zoom-out');
     const btnClosePdf = document.getElementById('btn-close-pdf');
 
     const gridModal = document.getElementById('grid-modal');
@@ -192,6 +196,22 @@
 
     if (pdfTabAnswer) {
       pdfTabAnswer.addEventListener('click', () => switchPdfTab('answer'));
+    }
+
+    if (btnPdfPrevPage) {
+      btnPdfPrevPage.addEventListener('click', () => stepPdfPage(-1));
+    }
+
+    if (btnPdfNextPage) {
+      btnPdfNextPage.addEventListener('click', () => stepPdfPage(1));
+    }
+
+    if (btnPdfZoomIn) {
+      btnPdfZoomIn.addEventListener('click', () => zoomPdf(1.2));
+    }
+
+    if (btnPdfZoomOut) {
+      btnPdfZoomOut.addEventListener('click', () => zoomPdf(0.83));
     }
 
     if (btnClosePdf) {

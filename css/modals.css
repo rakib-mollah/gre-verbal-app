@@ -1,5 +1,5 @@
 /* ==========================================================================
-   GRE Verbal Master - Modals & Overlays (Grid, PDF Viewer, Score & Stats)
+   GRE Verbal Master - Modals & Overlays (Grid, Native PDF Canvas Viewer, Score & Stats)
    ========================================================================== */
 
 /* --- Modal Base --- */
@@ -9,13 +9,13 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(5px);
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem;
+  padding: 0.5rem;
 }
 
 .modal-overlay.hidden {
@@ -76,21 +76,24 @@
   border-top: 1px solid var(--border-subtle);
 }
 
-/* --- In-App Embedded PDF Viewer Modal --- */
+/* --- Native PDF Canvas Viewer Modal (Universal Mobile & Desktop) --- */
 .modal-pdf-card {
-  max-width: 1100px;
-  width: 95vw;
-  height: 90vh;
-  max-height: 90vh;
+  max-width: 1000px;
+  width: 98vw;
+  height: 94vh;
+  max-height: 94vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .pdf-modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.65rem 1rem;
-  gap: 0.5rem;
+  padding: 0.55rem 0.85rem;
+  gap: 0.4rem;
   flex-wrap: wrap;
+  background-color: var(--bg-surface-elevated);
 }
 
 .pdf-modal-title-group {
@@ -99,35 +102,49 @@
   gap: 0.4rem;
 }
 
-.pdf-modal-title-group h2 {
-  font-size: 0.95rem;
+.pdf-title-sub-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-title-sub-group h2 {
+  font-size: 0.9rem;
   font-weight: 700;
+  line-height: 1.2;
+}
+
+.pdf-page-indicator {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  font-weight: 600;
 }
 
 .pdf-modal-controls {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  flex-wrap: wrap;
 }
 
 .pdf-tab-group {
   display: flex;
-  background-color: var(--bg-surface-elevated);
+  background-color: var(--bg-surface);
   padding: 2px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
 }
 
 .pdf-tab-btn {
-  padding: 0.3rem 0.65rem;
+  padding: 0.25rem 0.55rem;
   border: none;
   background: transparent;
   color: var(--text-secondary);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.15s ease;
+  white-space: nowrap;
 }
 
 .pdf-tab-btn.active {
@@ -135,19 +152,100 @@
   color: #ffffff;
 }
 
-.pdf-modal-body {
-  padding: 0;
-  overflow: hidden;
+.pdf-zoom-group {
   display: flex;
-  flex-direction: column;
-  background-color: #2b2b2b;
+  align-items: center;
+  gap: 0.2rem;
+  background-color: var(--bg-surface);
+  padding: 2px 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
 }
 
-.pdf-frame {
-  width: 100%;
-  height: 100%;
+.btn-pdf-tool {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-pdf-tool:hover {
+  background-color: var(--accent-primary);
+  color: #ffffff;
+}
+
+.pdf-zoom-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  padding: 0 4px;
+  min-width: 38px;
+  text-align: center;
+}
+
+.pdf-canvas-modal-body {
+  padding: 0.75rem;
+  overflow: auto;
   flex: 1;
-  border: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: #1e1e24;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pdf-render-canvas {
+  max-width: 100%;
+  height: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+.pdf-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: rgba(15, 23, 42, 0.85);
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  z-index: 10;
+}
+
+.pdf-spinner.hidden {
+  display: none !important;
+}
+
+.spinner-ring {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(56, 189, 248, 0.2);
+  border-top-color: var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* --- Question Grid Navigator --- */
