@@ -1,5 +1,5 @@
 /**
- * GRE Verbal Master - Modals, Navigator Grid, PDF.js Viewer & Settings Module
+ * GRE Verbal Master - Modals, Navigator Grid, High-Speed PDF.js Viewer & Settings Module
  */
 
 (function (global) {
@@ -11,6 +11,7 @@
   }
 
   let pdfDoc = null;
+  let pdfDocLoadingPromise = null;
   let currentPdfPage = 1;
   let pdfZoom = 1.0;
   let isPdfRendering = false;
@@ -50,22 +51,46 @@
     if (modal) modal.classList.add('hidden');
   }
 
-  // --- PDF.js Native Viewer Engine ---
-  async function loadPdfDocument() {
-    if (pdfDoc) return pdfDoc;
-    if (typeof pdfjsLib === 'undefined') {
-      console.error('PDF.js library not loaded.');
-      return null;
-    }
+  // --- Background Preloader for Instant Rendering ---
+  function preloadPdfDocument() {
+    if (pdfDocLoadingPromise || pdfDoc) return;
+    if (typeof pdfjsLib === 'undefined') return;
 
     try {
-      const loadingTask = pdfjsLib.getDocument('Official%20GRE%20Verbal.pdf');
-      pdfDoc = await loadingTask.promise;
-      return pdfDoc;
-    } catch (err) {
-      console.error('Failed to load PDF:', err);
-      return null;
+      const loadingTask = pdfjsLib.getDocument({
+        url: 'Official%20GRE%20Verbal.pdf',
+        cMapPacked: true
+      });
+
+      loadingTask.onProgress = function (progress) {
+        if (progress.total > 0) {
+          const pct = Math.round((progress.loaded / progress.total) * 100);
+          const DOM = getDOM();
+          if (DOM.pdfLoadingSpinner && !DOM.pdfLoadingSpinner.classList.contains('hidden')) {
+            const span = DOM.pdfLoadingSpinner.querySelector('span');
+            if (span) span.textContent = `Loading PDF (${pct}%)...`;
+          }
+        }
+      };
+
+      pdfDocLoadingPromise = loadingTask.promise.then(doc => {
+        pdfDoc = doc;
+        console.log('⚡ PDF Document preloaded successfully in background.');
+        return doc;
+      }).catch(err => {
+        console.warn('PDF background preload retry:', err);
+        pdfDocLoadingPromise = null;
+      });
+    } catch (e) {
+      console.error('PDF preloading error:', e);
     }
+  }
+
+  async function loadPdfDocument() {
+    if (pdfDoc) return pdfDoc;
+    if (pdfDocLoadingPromise) return await pdfDocLoadingPromise;
+    preloadPdfDocument();
+    return await pdfDocLoadingPromise;
   }
 
   async function renderPdfPage(pageNum) {
@@ -80,7 +105,11 @@
     isPdfRendering = true;
     currentPdfPage = pageNum;
 
-    if (DOM.pdfLoadingSpinner) DOM.pdfLoadingSpinner.classList.remove('hidden');
+    if (DOM.pdfLoadingSpinner) {
+      DOM.pdfLoadingSpinner.classList.remove('hidden');
+      const span = DOM.pdfLoadingSpinner.querySelector('span');
+      if (span) span.textContent = 'Rendering Page...';
+    }
 
     try {
       const doc = await loadPdfDocument();
@@ -103,17 +132,17 @@
 
       const page = await doc.getPage(validPage);
       
-      // Calculate responsive scale based on container width
-      const containerWidth = DOM.pdfCanvasContainer ? (DOM.pdfCanvasContainer.clientWidth - 24) : 600;
+      // Calculate responsive scale based on viewport width
+      const containerWidth = DOM.pdfCanvasContainer ? (DOM.pdfCanvasContainer.clientWidth - 24) : (window.innerWidth - 40);
       const unscaledViewport = page.getViewport({ scale: 1.0 });
-      const baseScale = Math.min(2.0, Math.max(0.6, containerWidth / unscaledViewport.width));
+      const baseScale = Math.min(2.2, Math.max(0.65, (containerWidth > 100 ? containerWidth : 600) / unscaledViewport.width));
       const finalScale = baseScale * pdfZoom;
 
       const viewport = page.getViewport({ scale: finalScale });
       const canvas = DOM.pdfCanvas;
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d', { alpha: false });
 
-      // High-DPI screen support
+      // Crisp Retina Rendering
       const outputScale = window.devicePixelRatio || 1;
       canvas.width = Math.floor(viewport.width * outputScale);
       canvas.height = Math.floor(viewport.height * outputScale);
@@ -271,6 +300,7 @@
   global.GREModals = {
     openModal,
     closeModal,
+    preloadPdfDocument,
     openPdfModal,
     switchPdfTab,
     renderPdfPage,

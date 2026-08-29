@@ -1,38 +1,36 @@
 /**
- * GRE Verbal Master - Application Bootstrap & Orchestrator
- * Pure Vanilla JavaScript (Zero Build Step, GitHub Pages Ready)
+ * GRE Verbal Master - Application Bootstrapper
  */
 
-(function () {
+document.addEventListener('DOMContentLoaded', () => {
   'use strict';
 
-  function initApp() {
-    // 1. Verify Dataset
-    const dataset = (typeof window.GRE_DATA !== 'undefined') ? window.GRE_DATA : [];
-    if (!dataset || dataset.length === 0) {
-      console.warn('GRE_DATA not detected or empty. Please ensure data modules are loaded.');
-    }
-
-    // 2. Initialize State
-    window.GREState.loadSavedState();
-    window.GREState.initData(dataset);
-
-    // 3. Apply Settings & Appearance
-    window.GREModals.applySettings();
-
-    // 4. Bind Interaction Listeners
-    window.GREEvents.bindEvents();
-
-    // 5. Initial Render
-    window.GRERenderer.renderCurrentQuestion();
-    window.GRERenderer.updateBookmarkBadge();
-
-    console.log(`⚡ GRE Verbal Master initialized successfully with ${dataset.length} questions.`);
+  // 1. Check dataset availability
+  const dataset = window.GRE_DATA || [];
+  if (!dataset || dataset.length === 0) {
+    console.error('GRE_DATA not found. Please ensure data scripts are loaded.');
+    return;
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initApp);
-  } else {
-    initApp();
+  // 2. Initialize State
+  const { initData, loadSavedState } = window.GREState;
+  initData(dataset);
+  loadSavedState();
+
+  // 3. Apply Preferences
+  window.GREModals.applySettings();
+
+  // 4. Preload PDF in background for instant page opening
+  if (window.GREModals && window.GREModals.preloadPdfDocument) {
+    window.GREModals.preloadPdfDocument();
   }
-})();
+
+  // 5. Initial Render
+  window.GRERenderer.renderCurrentQuestion();
+  window.GRERenderer.updateBookmarkBadge();
+
+  // 6. Bind Event Handlers
+  window.GREEvents.bindEvents();
+
+  console.log('⚡ GRE Verbal Master initialized successfully with', dataset.length, 'questions.');
+});
