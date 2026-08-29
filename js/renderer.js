@@ -38,6 +38,7 @@
       qBadgeType: document.getElementById('q-badge-type'),
       qBadgeDiff: document.getElementById('q-badge-diff'),
       btnPdfPageLabel: document.getElementById('btn-pdf-page-label'),
+      btnOpenPdfDirect: document.getElementById('btn-open-pdf-direct'),
       bookmarkBtn: document.getElementById('bookmark-btn'),
       qInstruction: document.getElementById('q-instruction'),
       qPrompt: document.getElementById('q-prompt'),
@@ -51,6 +52,7 @@
       expHeaderSub: document.getElementById('exp-header-sub'),
       expCorrectKey: document.getElementById('exp-correct-key'),
       expPdfPageNum: document.getElementById('exp-pdf-page-num'),
+      btnOpenPdfExpDirect: document.getElementById('btn-open-pdf-exp-direct'),
       expPassageSummary: document.getElementById('exp-passage-summary'),
       expDescContent: document.getElementById('exp-desc-content'),
       expPassageSummaryText: document.getElementById('exp-passage-summary-text'),
@@ -90,8 +92,14 @@
     DOM.qBadgeDiff.textContent = q.difficulty;
     DOM.qBadgeDiff.className = `badge badge-diff diff-${q.difficulty.toLowerCase()}`;
 
+    const qPdfPage = q.pdfPageQuestion || 24;
+    const ansPdfPage = q.pdfPageAnswer || 24;
+
     if (DOM.btnPdfPageLabel) {
-      DOM.btnPdfPageLabel.textContent = `PDF p. ${q.pdfPageQuestion || 1}`;
+      DOM.btnPdfPageLabel.textContent = `PDF p. ${qPdfPage}`;
+    }
+    if (DOM.btnOpenPdfDirect) {
+      DOM.btnOpenPdfDirect.href = `Official%20GRE%20Verbal.pdf#page=${qPdfPage}`;
     }
 
     // Bookmark
@@ -358,8 +366,12 @@
 
     DOM.expCorrectKey.textContent = `Choice ${q.correctAnswer.join(', ')}`;
 
+    const ansPdfPage = q.pdfPageAnswer || 24;
     if (DOM.expPdfPageNum) {
-      DOM.expPdfPageNum.textContent = q.pdfPageAnswer || 1;
+      DOM.expPdfPageNum.textContent = ansPdfPage;
+    }
+    if (DOM.btnOpenPdfExpDirect) {
+      DOM.btnOpenPdfExpDirect.href = `Official%20GRE%20Verbal.pdf#page=${ansPdfPage}`;
     }
 
     if (q.passage && q.passage.description) {

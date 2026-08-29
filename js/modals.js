@@ -39,7 +39,8 @@
       pdfTabAnswer: document.getElementById('pdf-tab-answer'),
       pdfTabQNum: document.getElementById('pdf-tab-q-num'),
       pdfTabAnsNum: document.getElementById('pdf-tab-ans-num'),
-      pdfZoomLabel: document.getElementById('pdf-zoom-label')
+      pdfZoomLabel: document.getElementById('pdf-zoom-label'),
+      btnPdfModalPopout: document.getElementById('btn-pdf-modal-popout')
     };
   }
 
@@ -128,6 +129,9 @@
       }
       if (DOM.pdfZoomLabel) {
         DOM.pdfZoomLabel.textContent = `${Math.round(pdfZoom * 100)}%`;
+      }
+      if (DOM.btnPdfModalPopout) {
+        DOM.btnPdfModalPopout.href = `Official%20GRE%20Verbal.pdf#page=${validPage}`;
       }
 
       const page = await doc.getPage(validPage);

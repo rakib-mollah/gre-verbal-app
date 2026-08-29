@@ -192,6 +192,29 @@
   text-align: center;
 }
 
+.btn-pdf-popout {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.55rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 26px;
+}
+
+.btn-pdf-popout:hover {
+  background-color: var(--bg-surface-hover);
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
 .pdf-canvas-modal-body {
   padding: 0.75rem;
   overflow: auto;

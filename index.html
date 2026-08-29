@@ -10,9 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=4">
+  <link rel="stylesheet" href="css/styles.css?v=5">
   <!-- PDF.js Engine for Universal Mobile (Android/iOS) and Desktop PDF Rendering -->
-  <script src="lib/pdf.min.js?v=4"></script>
+  <script src="lib/pdf.min.js?v=5"></script>
 </head>
 <body class="theme-dark">
   <!-- Top Navigation Header -->
@@ -177,11 +177,16 @@
             <span class="badge badge-diff" id="q-badge-diff">Medium</span>
           </div>
           <div class="meta-right">
-            <!-- PDF Source Locator Button -->
-            <button id="btn-open-pdf-modal" class="btn-action-pill btn-pdf-pill" title="Locate Question and Solution in Official PDF" aria-label="PDF Source">
+            <!-- PDF In-App Modal Button -->
+            <button id="btn-open-pdf-modal" class="btn-action-pill btn-pdf-pill" title="Open In-App PDF Viewer (Page source)" aria-label="PDF Source">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
               <span id="btn-pdf-page-label" class="pill-label">PDF p. 24</span>
             </button>
+            <!-- Direct Pop Out in New Tab Link -->
+            <a id="btn-open-pdf-direct" class="btn-action-pill btn-pdf-popout-pill" href="Official%20GRE%20Verbal.pdf#page=24" target="_blank" title="Pop Out PDF Page in New Tab">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              <span class="pill-label">Pop Out ↗</span>
+            </a>
             <!-- Copy Question Button -->
             <button id="btn-copy-question" class="btn-action-pill" title="Copy Question and Choices to Clipboard" aria-label="Copy Question">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -236,15 +241,20 @@
             </button>
 
             <div id="explanation-content" class="explanation-accordion-body">
-              <!-- Correct Key Banner & PDF Source Link -->
+              <!-- Correct Key Banner & PDF Source Links -->
               <div class="correct-answer-banner">
                 <div class="key-left">
                   <span class="banner-label">Correct Answer:</span>
                   <span class="banner-value" id="exp-correct-key">Choice E</span>
                 </div>
-                <button id="btn-open-pdf-exp" class="btn-pdf-exp-link" title="Open Explanation in PDF">
-                  <span>📄 PDF Solution (p. <span id="exp-pdf-page-num">24</span>) ↗</span>
-                </button>
+                <div class="key-right-actions">
+                  <button id="btn-open-pdf-exp" class="btn-pdf-exp-link" title="Open In-App PDF Solution Viewer">
+                    <span>📄 In-App Solution (p. <span id="exp-pdf-page-num">24</span>)</span>
+                  </button>
+                  <a id="btn-open-pdf-exp-direct" class="btn-pdf-exp-link btn-pdf-exp-popout" href="Official%20GRE%20Verbal.pdf#page=24" target="_blank" title="Pop Out Solution in New Tab">
+                    <span>Pop Out ↗</span>
+                  </a>
+                </div>
               </div>
 
               <!-- Passage Overview inside Explanation (also collapsible) -->
@@ -313,7 +323,13 @@
               <button id="btn-pdf-zoom-in" class="btn-pdf-tool" title="Zoom In">+</button>
             </div>
 
-            <button class="btn-close-modal" id="btn-close-pdf">&times;</button>
+            <!-- Modal Pop Out Button -->
+            <a id="btn-pdf-modal-popout" class="btn-pdf-popout" href="Official%20GRE%20Verbal.pdf" target="_blank" title="Pop Out in New Browser Tab">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              <span>Pop Out ↗</span>
+            </a>
+
+            <button class="btn-close-modal" id="btn-close-pdf" aria-label="Close Modal">&times;</button>
           </div>
         </div>
 
@@ -500,19 +516,19 @@
   </nav>
 
   <!-- 1. Data Modules -->
-  <script src="data/ch2_samples.js?v=4"></script>
-  <script src="data/ch3_rc.js?v=4"></script>
-  <script src="data/ch4_tc.js?v=4"></script>
-  <script src="data/ch5_se.js?v=4"></script>
-  <script src="data/ch6_mixed.js?v=4"></script>
-  <script src="data/index.js?v=4"></script>
+  <script src="data/ch2_samples.js?v=5"></script>
+  <script src="data/ch3_rc.js?v=5"></script>
+  <script src="data/ch4_tc.js?v=5"></script>
+  <script src="data/ch5_se.js?v=5"></script>
+  <script src="data/ch6_mixed.js?v=5"></script>
+  <script src="data/index.js?v=5"></script>
 
   <!-- 2. Logic Modules -->
-  <script src="js/state.js?v=4"></script>
-  <script src="js/renderer.js?v=4"></script>
-  <script src="js/exam.js?v=4"></script>
-  <script src="js/modals.js?v=4"></script>
-  <script src="js/events.js?v=4"></script>
-  <script src="js/app.js?v=4"></script>
+  <script src="js/state.js?v=5"></script>
+  <script src="js/renderer.js?v=5"></script>
+  <script src="js/exam.js?v=5"></script>
+  <script src="js/modals.js?v=5"></script>
+  <script src="js/events.js?v=5"></script>
+  <script src="js/app.js?v=5"></script>
 </body>
 </html>

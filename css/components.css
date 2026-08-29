@@ -243,6 +243,7 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
+  flex-wrap: wrap;
 }
 
 .q-index {
@@ -312,6 +313,15 @@
 .btn-pdf-pill {
   border-color: rgba(56, 189, 248, 0.4);
   color: var(--accent-primary);
+}
+
+.btn-pdf-popout-pill {
+  color: var(--text-secondary);
+}
+
+.btn-pdf-popout-pill:hover {
+  color: #38bdf8;
+  border-color: #38bdf8;
 }
 
 .btn-action-pill.copied-active {
@@ -742,6 +752,12 @@
   color: var(--color-success);
 }
 
+.key-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
 .btn-pdf-exp-link {
   background-color: var(--bg-surface);
   border: 1px solid var(--color-success-border);
@@ -752,11 +768,25 @@
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.15s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }
 
 .btn-pdf-exp-link:hover {
   background-color: var(--color-success);
   color: #ffffff;
+}
+
+.btn-pdf-exp-popout {
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.btn-pdf-exp-popout:hover {
+  background-color: var(--bg-surface-hover);
+  color: var(--text-primary);
+  border-color: var(--text-primary);
 }
 
 .exp-passage-summary {
