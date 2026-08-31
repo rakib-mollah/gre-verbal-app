@@ -104,6 +104,53 @@
     }
   }
 
+  function applyCloudData(cloudData, syncCode) {
+    if (!cloudData || !global.GREState) return;
+    isApplyingRemote = true;
+    try {
+      const state = global.GREState.state;
+      const displaySyncCode = document.getElementById('display-sync-code');
+      if (displaySyncCode) displaySyncCode.textContent = syncCode;
+
+      // Adopt cloud bookmarks
+      if (Array.isArray(cloudData.bookmarks)) {
+        state.bookmarks = new Set(cloudData.bookmarks);
+      }
+
+      // Adopt user answers & checked states
+      if (cloudData.userAnswers) {
+        state.userAnswers = Object.assign({}, cloudData.userAnswers);
+      }
+      if (cloudData.checkedQuestions) {
+        state.checkedQuestions = Object.assign({}, cloudData.checkedQuestions);
+      }
+
+      // Sync settings if provided
+      if (cloudData.settings) {
+        state.settings = Object.assign(state.settings, cloudData.settings);
+        if (global.GREModals && global.GREModals.applySettings) {
+          global.GREModals.applySettings();
+        }
+      }
+
+      // Save to localStorage
+      global.GREState.saveState(false); // false = do not loop push to cloud
+
+      // Re-render UI immediately
+      if (global.GRERenderer) {
+        global.GRERenderer.updateBookmarkBadge();
+        global.GRERenderer.renderCurrentQuestion();
+      }
+      if (global.GREModals && global.GREModals.renderQuestionGrid) {
+        global.GREModals.renderQuestionGrid();
+      }
+    } finally {
+      setTimeout(() => {
+        isApplyingRemote = false;
+      }, 50);
+    }
+  }
+
   function attachSyncListener() {
     if (!db) return;
     if (activeUnsubscribe) {
@@ -114,58 +161,14 @@
     const syncCode = getSyncCode();
     const docRef = db.collection('gre_users').doc(syncCode);
 
-    activeUnsubscribe = docRef.onSnapshot((doc) => {
+    activeUnsubscribe = docRef.onSnapshot({ includeMetadataChanges: false }, (doc) => {
       if (isApplyingRemote) return;
 
       if (doc.exists) {
-        const cloudData = doc.data();
-        if (cloudData && global.GREState) {
-          isApplyingRemote = true;
-          try {
-            const displaySyncCode = document.getElementById('display-sync-code');
-            if (displaySyncCode) displaySyncCode.textContent = syncCode;
-
-            // Adopt cloud bookmarks
-            if (Array.isArray(cloudData.bookmarks)) {
-              state.bookmarks = new Set(cloudData.bookmarks);
-            }
-
-            // Adopt user answers & checked states
-            if (cloudData.userAnswers) {
-              state.userAnswers = Object.assign({}, cloudData.userAnswers);
-            }
-            if (cloudData.checkedQuestions) {
-              state.checkedQuestions = Object.assign({}, cloudData.checkedQuestions);
-            }
-
-            // Sync settings if provided
-            if (cloudData.settings) {
-              state.settings = Object.assign(state.settings, cloudData.settings);
-              if (global.GREModals && global.GREModals.applySettings) {
-                global.GREModals.applySettings();
-              }
-            }
-
-            // Save to localStorage
-            global.GREState.saveState(false); // false = do not loop push to cloud
-
-            // Re-render UI
-            if (global.GRERenderer) {
-              global.GRERenderer.updateBookmarkBadge();
-              global.GRERenderer.renderCurrentQuestion();
-            }
-            if (global.GREModals && global.GREModals.renderQuestionGrid) {
-              global.GREModals.renderQuestionGrid();
-            }
-          } finally {
-            setTimeout(() => {
-              isApplyingRemote = false;
-            }, 100);
-          }
-        }
+        applyCloudData(doc.data(), syncCode);
         updateStatus('synced', 'Live Cloud Sync Active');
       } else {
-        // Doc does not exist yet on cloud, push local state to initialize it
+        // Doc does not exist yet on cloud, push local state to initialize it immediately
         syncToCloud();
         updateStatus('synced', 'Live Cloud Sync Active');
       }
@@ -179,8 +182,9 @@
     if (!db || isApplyingRemote) return;
 
     clearTimeout(debounceTimer);
-    updateStatus('syncing', 'Syncing to Cloud...');
+    updateStatus('syncing', 'Syncing...');
 
+    // 50ms ultra-fast debounce
     debounceTimer = setTimeout(async () => {
       try {
         const syncCode = getSyncCode();
@@ -203,15 +207,30 @@
         console.warn('Cloud sync push error:', err);
         updateStatus('error', 'Sync Failed (Will Retry)');
       }
-    }, 400);
+    }, 50);
   }
 
-  function setSyncCode(newCode) {
+  async function setSyncCode(newCode) {
     if (!newCode || !newCode.trim()) return false;
     const formatted = newCode.trim().toUpperCase();
     localStorage.setItem(SYNC_CODE_KEY, formatted);
     
-    // Re-attach Firestore listener to the new sync code document
+    // Fast direct fetch for immediate UI update
+    if (db) {
+      updateStatus('syncing', 'Loading data from cloud...');
+      try {
+        const docRef = db.collection('gre_users').doc(formatted);
+        const doc = await docRef.get();
+        if (doc.exists) {
+          applyCloudData(doc.data(), formatted);
+          updateStatus('synced', 'Live Cloud Sync Active');
+        }
+      } catch (e) {
+        console.warn('Direct fetch error:', e);
+      }
+    }
+
+    // Re-attach real-time listener
     attachSyncListener();
     return true;
   }
