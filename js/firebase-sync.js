@@ -122,19 +122,20 @@
         if (cloudData && global.GREState) {
           isApplyingRemote = true;
           try {
-            const state = global.GREState.state;
+            const displaySyncCode = document.getElementById('display-sync-code');
+            if (displaySyncCode) displaySyncCode.textContent = syncCode;
 
-            // Merge bookmarks (Union of local & cloud so nothing gets lost)
+            // Adopt cloud bookmarks
             if (Array.isArray(cloudData.bookmarks)) {
-              cloudData.bookmarks.forEach(id => state.bookmarks.add(id));
+              state.bookmarks = new Set(cloudData.bookmarks);
             }
 
-            // Update user answers & checked states if cloud has them
+            // Adopt user answers & checked states
             if (cloudData.userAnswers) {
-              state.userAnswers = Object.assign({}, state.userAnswers, cloudData.userAnswers);
+              state.userAnswers = Object.assign({}, cloudData.userAnswers);
             }
             if (cloudData.checkedQuestions) {
-              state.checkedQuestions = Object.assign({}, state.checkedQuestions, cloudData.checkedQuestions);
+              state.checkedQuestions = Object.assign({}, cloudData.checkedQuestions);
             }
 
             // Sync settings if provided
