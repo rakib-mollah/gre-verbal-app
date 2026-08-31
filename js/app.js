@@ -32,5 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // 6. Bind Event Handlers
   window.GREEvents.bindEvents();
 
+  // 7. Initialize Firebase Real-Time Cloud Sync
+  if (window.GRESync && window.GRESync.initFirebase) {
+    window.GRESync.initFirebase();
+  }
+
   console.log('⚡ GRE Verbal Master initialized successfully with', dataset.length, 'questions.');
 });

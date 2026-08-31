@@ -168,6 +168,19 @@
     const fontSizeInc = document.getElementById('font-size-inc');
     const fontSizeDec = document.getElementById('font-size-dec');
 
+    const cloudSyncPill = document.getElementById('cloud-sync-pill');
+    const displaySyncCode = document.getElementById('display-sync-code');
+    const btnCopySyncCode = document.getElementById('btn-copy-sync-code');
+    const inputLinkSyncCode = document.getElementById('input-link-sync-code');
+    const btnLinkSyncCode = document.getElementById('btn-link-sync-code');
+    const syncLinkFeedback = document.getElementById('sync-link-feedback');
+
+    function updateSyncCodeUI() {
+      if (displaySyncCode && global.GRESync && global.GRESync.getSyncCode) {
+        displaySyncCode.textContent = global.GRESync.getSyncCode();
+      }
+    }
+
     const examReviewBtn = document.getElementById('exam-review-btn');
     const examSubmitBtn = document.getElementById('exam-submit-btn');
     const btnCloseReview = document.getElementById('btn-close-review');
@@ -420,7 +433,22 @@
     }
     if (btnCloseStats) btnCloseStats.addEventListener('click', () => closeModal(statsModal));
 
-    if (btnSettingsToggle) btnSettingsToggle.addEventListener('click', () => openModal(settingsModal));
+    if (btnSettingsToggle) {
+      btnSettingsToggle.addEventListener('click', () => {
+        updateSyncCodeUI();
+        openModal(settingsModal);
+      });
+    }
+    if (cloudSyncPill) {
+      cloudSyncPill.addEventListener('click', () => {
+        updateSyncCodeUI();
+        openModal(settingsModal);
+        setTimeout(() => {
+          const syncCard = document.querySelector('.sync-card-group');
+          if (syncCard) syncCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 80);
+      });
+    }
     if (btnCloseSettings) btnCloseSettings.addEventListener('click', () => closeModal(settingsModal));
 
     if (examReviewBtn) {
@@ -529,7 +557,42 @@
       });
     }
 
-    // 14. Keyboard Navigation
+    // 14. Cloud Sync Actions
+    if (btnCopySyncCode) {
+      btnCopySyncCode.addEventListener('click', () => {
+        const code = global.GRESync ? global.GRESync.getSyncCode() : '';
+        if (code) {
+          copyToClipboard(code, btnCopySyncCode, 'Copied Code!');
+        }
+      });
+    }
+
+    if (btnLinkSyncCode) {
+      btnLinkSyncCode.addEventListener('click', () => {
+        const val = inputLinkSyncCode ? inputLinkSyncCode.value.trim().toUpperCase() : '';
+        if (!val || val.length < 4) {
+          if (syncLinkFeedback) {
+            syncLinkFeedback.textContent = '❌ Please enter a valid Sync Code (e.g. GRE-XXXX)';
+            syncLinkFeedback.className = 'sync-feedback-text sync-feedback-error';
+          }
+          return;
+        }
+
+        if (confirm(`Link this device to Sync Code: ${val}? This will load all bookmarks and answers associated with this code.`)) {
+          if (global.GRESync && global.GRESync.setSyncCode) {
+            global.GRESync.setSyncCode(val);
+            updateSyncCodeUI();
+            if (syncLinkFeedback) {
+              syncLinkFeedback.textContent = '✓ Linked successfully! Syncing data...';
+              syncLinkFeedback.className = 'sync-feedback-text sync-feedback-success';
+            }
+            if (inputLinkSyncCode) inputLinkSyncCode.value = '';
+          }
+        }
+      });
+    }
+
+    // 15. Keyboard Navigation
     window.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
       if (e.key === 'ArrowRight') goNext();

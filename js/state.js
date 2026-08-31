@@ -39,7 +39,7 @@
     applyFilters();
   }
 
-  function saveState() {
+  function saveState(triggerCloudSync = true) {
     try {
       const dataToSave = {
         userAnswers: state.userAnswers,
@@ -50,6 +50,11 @@
         mode: state.mode
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
+
+      // Trigger automatic background Firebase Cloud synchronization
+      if (triggerCloudSync !== false && global.GRESync && global.GRESync.syncToCloud) {
+        global.GRESync.syncToCloud();
+      }
     } catch (e) {
       console.warn('LocalStorage save failed:', e);
     }

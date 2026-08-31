@@ -39,6 +39,10 @@
         <button id="btn-stats-toggle" class="header-icon-btn" title="Stats & Progress" aria-label="Stats">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"></path></svg>
         </button>
+        <button id="cloud-sync-pill" class="cloud-sync-header-btn" title="Firebase Cloud Sync" aria-label="Cloud Sync">
+          <span id="cloud-sync-dot" class="sync-dot status-connecting"></span>
+          <span class="sync-header-label">Sync</span>
+        </button>
         <button id="btn-settings-toggle" class="header-icon-btn" title="Theme & Settings" aria-label="Settings">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         </button>
@@ -489,6 +493,32 @@
               <button class="font-family-btn" data-set-font="sans">Sans-Serif (Inter)</button>
             </div>
           </div>
+
+          <!-- Cloud Sync Section -->
+          <div class="setting-group sync-card-group">
+            <div class="sync-card-header">
+              <label class="setting-label">☁️ Firebase Cloud Sync</label>
+              <span id="cloud-sync-status-text" class="sync-status-badge">Connecting...</span>
+            </div>
+            <p class="setting-hint">Your bookmarks and answers sync automatically across your phone, tablet, and PC.</p>
+            
+            <div class="sync-code-container">
+              <div class="sync-code-box">
+                <span class="sync-code-label">Your Sync Code:</span>
+                <span id="display-sync-code" class="sync-code-val">GRE-XXXX</span>
+                <button id="btn-copy-sync-code" class="btn-sm btn-secondary" title="Copy Sync Code">📋 Copy</button>
+              </div>
+            </div>
+
+            <div class="sync-link-container">
+              <label class="sync-sublabel">Pair another device with its code:</label>
+              <div class="sync-input-group">
+                <input type="text" id="input-link-sync-code" class="sync-input" placeholder="e.g. GRE-8492" maxlength="10" autocomplete="off" autocorrect="off" autocapitalize="characters">
+                <button id="btn-link-sync-code" class="btn-sm btn-primary">Link Device</button>
+              </div>
+              <span id="sync-link-feedback" class="sync-feedback-text"></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -524,11 +554,16 @@
   <script src="data/index.js?v=5"></script>
 
   <!-- 2. Logic Modules -->
-  <script src="js/state.js?v=5"></script>
-  <script src="js/renderer.js?v=5"></script>
-  <script src="js/exam.js?v=5"></script>
-  <script src="js/modals.js?v=5"></script>
-  <script src="js/events.js?v=5"></script>
-  <script src="js/app.js?v=5"></script>
+  <!-- Firebase SDKs (Compat for Vanilla JS) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-sync.js?v=6"></script>
+
+  <script src="js/state.js?v=6"></script>
+  <script src="js/renderer.js?v=6"></script>
+  <script src="js/exam.js?v=6"></script>
+  <script src="js/modals.js?v=6"></script>
+  <script src="js/events.js?v=6"></script>
+  <script src="js/app.js?v=6"></script>
 </body>
 </html>

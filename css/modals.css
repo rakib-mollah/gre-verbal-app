@@ -440,6 +440,118 @@
   cursor: pointer;
 }
 
+/* --- Cloud Sync Card in Settings Modal --- */
+.sync-card-group {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.sync-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sync-status-badge {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.setting-hint {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.35;
+  margin: 0;
+}
+
+.sync-code-container {
+  background-color: var(--bg-surface-elevated);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 0.75rem;
+}
+
+.sync-code-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.sync-code-label {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.sync-code-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--accent-primary);
+}
+
+.sync-link-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+.sync-sublabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sync-input-group {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.sync-input {
+  flex: 1;
+  padding: 0.45rem 0.65rem;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sync-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.sync-feedback-text {
+  font-size: 0.72rem;
+  min-height: 1rem;
+}
+
+.sync-feedback-success {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.sync-feedback-error {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
 /* --- Exam Review Table --- */
 .review-grid-stats {
   display: flex;
